@@ -122,9 +122,9 @@ for i in range(1, len(sales_2)):
 
 # Mengubah layout untuk lebih jelas
 fig.update_layout(
-    title="Sales with Percentage Change (2 Line Charts)",
+    title="",
     xaxis_title="Month",
-    yaxis_title="Sales",
+    yaxis_title="Sales(Rp)",
     showlegend=True
 )
 
