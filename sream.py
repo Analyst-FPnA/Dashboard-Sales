@@ -13,14 +13,10 @@ import plotly.graph_objs as go
 
 st.set_page_config(layout="wide")
 
-def download_file_from_github(url, save_path):
-    response = requests.get(url)
-    if response.status_code == 200:
-        with open(save_path, 'wb') as file:
-            file.write(response.content)
-        print(f"File downloaded successfully and saved to {save_path}")
-    else:
-        print(f"Failed to download file. Status code: {response.status_code}")
+def download_file_from_google_drive(file_id, dest_path):
+    if not os.path.exists(dest_path):
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, dest_path, quiet=False)
 
 file_id = '1HKQGDtuD5jh8Fj1XMJ-AEAKPMTnSeIBm'
 dest_path = f'downloaded_file.zip'
