@@ -22,13 +22,13 @@ def download_file_from_github(url, save_path):
     else:
         print(f"Failed to download file. Status code: {response.status_code}")
 
-file_id = '1KCY_Rr97Y1yaf-4LOE1NsZQQ2DdDBfIR'
+file_id = '1HKQGDtuD5jh8Fj1XMJ-AEAKPMTnSeIBm'
 dest_path = f'downloaded_file.zip'
 download_file_from_google_drive(file_id, dest_path)
 
 
 if 'Penjualan.csv' not in os.listdir():
-    with zipfile.ZipFile(f'Penjualan.zip', 'r') as z:
+    with zipfile.ZipFile(f'downloaded_file.zip', 'r') as z:
         dfs = []
         for file in z.namelist():
             df = pd.read_html(file)[0]
