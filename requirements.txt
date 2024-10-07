@@ -4,3 +4,4 @@ gdown
 matplotlib
 seaborn
 plotly
+html5lib
