@@ -27,7 +27,7 @@ if 'Penjualan.csv' not in os.listdir():
     with zipfile.ZipFile(f'downloaded_file.zip', 'r') as z:
         dfs = []
         for file in z.namelist():
-            with z.open(file_name) as f:
+            with z.open(file) as f:
                 df = pd.read_html(f)[0]
                 df = df[df.iloc[1:,].columns[df.iloc[1:,].apply(lambda col: col.astype(str).str.contains('Rp', case=False, na=False).any())]]
                 df.columns = df.iloc[0,:]
