@@ -47,6 +47,7 @@ if 'Penjualan.csv' not in os.listdir():
 if 'df_sales' not in locals():
     df_sales = pd.read_csv('Penjualan.csv')
 
+st.title('Dashboard-Sales')
 list_bulan = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December']
