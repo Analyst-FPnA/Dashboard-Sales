@@ -27,19 +27,20 @@ if 'Penjualan.csv' not in os.listdir():
     with zipfile.ZipFile(f'downloaded_file.zip', 'r') as z:
         dfs = []
         for file in z.namelist():
-            df = pd.read_html(file)[0]
-            df = df[df.iloc[1:,].columns[df.iloc[1:,].apply(lambda col: col.astype(str).str.contains('Rp', case=False, na=False).any())]]
-            df.columns = df.iloc[0,:]
-            df = df.iloc[2:,:-2].iloc[:-1].drop(columns='OFFLINE')
-            df.iloc[:,1:] = df.iloc[:,1:].astype(float)
-            df['ONLINE LAINNYA'] = df.iloc[:,9:].astype(float).sum(axis=1)
-            df = df.iloc[:,[i for i in range(0,9)]+[-1]]
-            df = df.melt(id_vars=['RESTO'], value_vars=df.iloc[:,1:].columns,value_name='RP',var_name='CATEGORY')
-            df['TYPE'] = df['CATEGORY'].apply(lambda x: x if x=='DINE IN' else 'TAKE AWAY')
-            df['PAYMENT'] = df['CATEGORY'].apply(lambda x: 'OFFLINE' if x in ['DINE IN','TAKE AWAY'] else 'ONLINE')
-            df = df.sort_values(['RESTO','PAYMENT']).reset_index(drop=True)
-            df['MONTH'] = re.findall(r'_(\w+)', file)[-1]
-            dfs.append(df)
+            with z.open(file_name) as f:
+                df = pd.read_html(f)[0]
+                df = df[df.iloc[1:,].columns[df.iloc[1:,].apply(lambda col: col.astype(str).str.contains('Rp', case=False, na=False).any())]]
+                df.columns = df.iloc[0,:]
+                df = df.iloc[2:,:-2].iloc[:-1].drop(columns='OFFLINE')
+                df.iloc[:,1:] = df.iloc[:,1:].astype(float)
+                df['ONLINE LAINNYA'] = df.iloc[:,9:].astype(float).sum(axis=1)
+                df = df.iloc[:,[i for i in range(0,9)]+[-1]]
+                df = df.melt(id_vars=['RESTO'], value_vars=df.iloc[:,1:].columns,value_name='RP',var_name='CATEGORY')
+                df['TYPE'] = df['CATEGORY'].apply(lambda x: x if x=='DINE IN' else 'TAKE AWAY')
+                df['PAYMENT'] = df['CATEGORY'].apply(lambda x: 'OFFLINE' if x in ['DINE IN','TAKE AWAY'] else 'ONLINE')
+                df = df.sort_values(['RESTO','PAYMENT']).reset_index(drop=True)
+                df['MONTH'] = re.findall(r'_(\w+)', file)[-1]
+                dfs.append(df)
         pd.concat(dfs, ignore_index=True).to_csv('Penjualan.csv',index=False)
 
 if 'df_sales' not in locals():
