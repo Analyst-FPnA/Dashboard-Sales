@@ -130,3 +130,4 @@ fig.update_layout(
 )
 
 st.plotly_chart(fig, use_container_width=True)
+st.dataframe(df_sales.groupby(['MONTH','TYPE'])['RP'].sum().reset_index().pivot(index=['TYPE'],columns='MONTH',values='RP').reset_index(), use_container_width=True, hide_index=True)
