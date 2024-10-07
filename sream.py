@@ -8,6 +8,7 @@ import gdown
 import tempfile
 import matplotlib.pyplot as plt
 import seaborn as sns
+import re
 
 import plotly.graph_objs as go
 
