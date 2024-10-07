@@ -44,7 +44,7 @@ if 'Penjualan.csv' not in os.listdir():
             df = df.sort_values(['RESTO','PAYMENT']).reset_index(drop=True)
             df['MONTH'] = re.findall(r'_(\w+)', file)[-1]
             dfs.append(df)
-          pd.concat(dfs, ignore_index=True).to_csv('Penjualan.csv',index=False)
+        pd.concat(dfs, ignore_index=True).to_csv('Penjualan.csv',index=False)
 
 if 'df_sales' not in locals():
     df_sales = pd.read_csv('Penjualan.csv')
