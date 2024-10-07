@@ -130,4 +130,14 @@ fig.update_layout(
 )
 
 st.plotly_chart(fig, use_container_width=True)
-st.dataframe(df_sales.groupby(['MONTH','TYPE'])['RP'].sum().reset_index().pivot(index=['TYPE'],columns='MONTH',values='RP').reset_index(), use_container_width=True, hide_index=True)
+
+def format_number(x):
+    if x==0:
+        return ''
+    if isinstance(x, (int, float)):
+        return "{:,.0f}".format(x)
+    return x
+
+df_pivot = df_sales.groupby(['MONTH','TYPE'])['RP'].sum().reset_index().pivot(index=['TYPE'],columns='MONTH',values='RP').reset_index()
+df_pivot = df_pivot.style.format(lambda x: format_number(x)).background_gradient(cmap='Reds', axis=1, subset=df_pivot.columns[1:])
+st.dataframe(df_pivot, use_container_width=True, hide_index=True)
