@@ -52,7 +52,7 @@ list_bulan = [
         'July', 'August', 'September', 'October', 'November', 'December']
 
 df_sales['MONTH'] = pd.Categorical(df_sales['MONTH'], categories=[x for x in list_bulan if x in df_sales['MONTH'].unique()], ordered=True)
-df_line = df.groupby(['MONTH','TYPE'])['RP'].sum().reset_index()#.pivot(index=['TYPE'],columns='MONTH',values='RP')
+df_line = df_sales.groupby(['MONTH','TYPE'])['RP'].sum().reset_index()#.pivot(index=['TYPE'],columns='MONTH',values='RP')
 
 # Data untuk line chart pertama (Sales)
 months = df_line[['MONTH']].drop_duplicates()['MONTH'].tolist()
