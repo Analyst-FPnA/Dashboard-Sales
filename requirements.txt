@@ -1,0 +1,6 @@
+lxml
+openpyxl
+gdown
+matplotlib
+seaborn
+plotly
